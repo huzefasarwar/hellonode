@@ -12,6 +12,7 @@ node {
          * docker build on the command line */
 
         app = "docker build -t kubehuzefa/hellonode ."
+        app = "kubehuzefa/hellonode"
     }
 
     stage('Test image') {
