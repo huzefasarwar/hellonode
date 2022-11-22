@@ -24,7 +24,7 @@ node {
          * Pushing multiple tags is cheap, as all the layers are reused. */
         withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) 
         {
-            sh "docker login -u kubehuzefa -p ${dockerhub}"
+            sh "sudo docker login -u kubehuzefa -p ${dockerhub}"
         }
         app.push("${env.BUILD_ID}")
        
