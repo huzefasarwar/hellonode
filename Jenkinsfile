@@ -11,7 +11,7 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = "docker build -t kubehuzefa/hellonode ."
+        app = docker.build("kubehuzefa/hellonode:${env.BUILD_ID}")
         
     }
 
@@ -22,9 +22,10 @@ node {
          * First, the incremental build number from Jenkins
          * Second, the 'latest' tag.
          * Pushing multiple tags is cheap, as all the layers are reused. */
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') 
-        docker push kubehuzefa/hellonode:${env.BUILD_NUMBER}
-        docker push kubehuzefa/hellonode:latest
+        withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]){
+            sh "docker login -u kubehuzefa -p ${dockerhub}"
+        }
+        app.push("${env.BUILD_ID}")
        
     }
-}
+
