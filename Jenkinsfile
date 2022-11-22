@@ -22,10 +22,11 @@ node {
          * First, the incremental build number from Jenkins
          * Second, the 'latest' tag.
          * Pushing multiple tags is cheap, as all the layers are reused. */
-        withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]){
+        withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) 
+        {
             sh "docker login -u kubehuzefa -p ${dockerhub}"
         }
         app.push("${env.BUILD_ID}")
        
     }
-
+}
